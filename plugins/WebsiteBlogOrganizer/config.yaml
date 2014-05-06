@@ -1,0 +1,21 @@
+name:        'Website & Blog Organizer'
+id:          'websiteblogorganizer'
+key:         'websiteblogorganizer'
+description: 'Manage blog and website hierarchy.'
+author:      'Dan Wolfgang, uiNNOVATIONS'
+author_link: http://uinnovations.com
+plugin_link: http://github.com/danwolfgang/mt-plugin-website-blog-organizer
+version:     1.0.0
+
+applications:
+    cms:
+        methods:
+            websiteblogorganizer_list: $WebsiteBlogOrganizer::WebsiteBlogOrganizer::Plugin::list
+            websiteblogorganizer_save: $WebsiteBlogOrganizer::WebsiteBlogOrganizer::Plugin::save
+        menus:
+            tools:websiteblogorganizer:
+                label: 'Website & Blog Organizer'
+                order: 200
+                mode: 'websiteblogorganizer_list'
+                view: 'system'
+

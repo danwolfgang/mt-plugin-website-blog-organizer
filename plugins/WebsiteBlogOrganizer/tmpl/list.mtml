@@ -1,0 +1,107 @@
+<mt:SetVarBlock name="page_title">Website & Blog Organizer</mt:SetVarBlock>
+
+<mt:setvar name="position_actions_bottom" value="1">
+<mt:setvartemplate name="action_buttons">
+    <button
+        mt:mode="blogwebsiteorganizer_save"
+        type="submit"
+        accesskey="s"
+        title="Save"
+        class="primary-button"
+        ><__trans phrase="Save Changes"></button>
+</mt:setvartemplate>
+
+<mt:SetVarBlock name="system_msg">
+    <div id="msg-block">
+        <mt:if name="saved">
+            <mtapp:statusmsg
+                class="success">
+                    Blog and Website hierarchy has been saved.
+            </mtapp:statusmsg>
+        </mt:if>
+        <mtapp:statusmsg
+            class="info">
+                When moving any Websites and Blogs be sure to update the Publishing Paths as necessary.
+        </mtapp:statusmsg>
+        <mtapp:statusmsg
+            class="info">
+                Note that Roles and Permissions are <em>not</em> changed when moving Websites and Blogs.
+        </mtapp:statusmsg>
+    </div>
+</mt:SetVarBlock>
+
+<mt:SetVarBlock name="form_header">
+    <form name="list" id="list" method="post" action="<mt:Var name="script_url">">
+        <input type="hidden" name="__mode"  value="websiteblogorganizer_save" />
+</mt:SetVarBlock>
+
+
+<mt:Include name="include/header.tmpl" id="header_include">
+
+<mtapp:SettingGroup
+    id="websites">
+    <h2>Websites</h2>
+
+    <mt:Websites>
+        <mtapp:setting
+            id="website-<mt:WebsiteName dirify="1">"
+            label_class="left-label"
+            label="<mt:WebsiteName>"
+            hint="Demote this Website to Blog status by making it become part of another Website."
+            show_hint="1">
+            <mt:WebsiteID setvar="current_id">
+            <select name="<mt:WebsiteID>">
+                <option value="0">No change</option>
+            <mt:Websites>
+                <mt:If tag="WebsiteID" ne="$current_id">
+                <option value="<mt:WebsiteID>">Demote to a Blog in <mt:WebsiteName></option>
+                </mt:If>
+            </mt:Websites>
+            </select>
+            (<a href="<mt:Var name="script_url">?__mode=cfg_prefs&blog_id=<mt:WebsiteID>">Edit Website settings</a>)
+        </mtapp:setting>
+    </mt:Websites>
+</mtapp:SettingGroup>
+
+<mtapp:SettingGroup
+    id="blogs">
+    <h2>Blogs</h2>
+
+    <mt:Blogs>
+        <mtapp:setting
+            id="blog-<mt:BlogName dirify="1">"
+            label_class="left-label"
+            label="<mt:BlogName><br />(in <mt:WebsiteName>)"
+            hint="Promote this Blog to Website status or move it to another Website."
+            show_hint="1">
+            <select name="<mt:BlogID>">
+                <option value="0">No change</option>
+                <option value="new">Promote to Website</option>
+            <mt:WebsiteID setvar="current_id">
+            <mt:Websites>
+                <mt:If tag="WebsiteID" ne="$current_id">
+                <option value="<mt:BlogID>">Move to <mt:WebsiteName></option>
+                </mt:If>
+            </mt:Websites>
+            </select>
+            (<a href="<mt:Var name="script_url">?__mode=cfg_prefs&blog_id=<mt:BlogID>">Edit Blog settings</a>)
+        </mtapp:setting>
+    </mt:Blogs>
+</mtapp:SettingGroup>
+
+<div class="actions-bar">
+    <div class="actions-bar-inner pkg actions">
+        <button
+            type="submit"
+            accesskey="s"
+            title="Save changes"
+            class="action primary button primary-button"
+            >Save Changes</button>
+    </div>
+</div>
+
+<mt:SetVarBlock name="form_footer">
+    </form>
+</mt:SetVarBlock>
+
+<mt:Include name="include/footer.tmpl">
