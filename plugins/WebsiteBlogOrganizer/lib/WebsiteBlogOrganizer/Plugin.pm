@@ -41,7 +41,12 @@ sub save {
         else {
             # Promote this blog to a website.
             if ($q->param($field) eq 'new') {
+		my $site_url  = $obj->site_url;
+		my $site_path = $obj->site_path;
+
                 $obj->class('website');
+		$obj->site_url( $site_url );
+		$obj->site_path( $site_path );
                 $obj->parent_id('');
             }
             # This blog is moving to another website.
